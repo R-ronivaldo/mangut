@@ -13,6 +13,7 @@ router.get("/user/:id", ControllerUser.select);
 router.post("/user", ControllerUser.insert);
 router.put("/user/:id", ControllerUser.update);
 router.delete("/user/:id", ControllerUser.remove);
+router.post("/authenticate", ControllerUser.acess);
 
 router.get("/catalog/:id", ControllerCatalog.select);
 router.post("/catalog", ControllerCatalog.insert);
