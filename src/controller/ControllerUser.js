@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Usuario = mongoose.model("Usuario")
+const Usuario = mongoose.model("User");
 
 module.exports = {
     async insert(req, res){
@@ -24,6 +24,6 @@ module.exports = {
     async remove(req, res) {
         await Usuario.findByIdAndRemove(req.params.id);
 
-        return res.send("Usuário deletado com sucesso!");
-    }
+        return res.status(200).send("Usuário deletado com sucesso!");
+    },
 };

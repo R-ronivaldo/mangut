@@ -1,21 +1,19 @@
 const mongoose = require("mongoose");
 
-const ProdutoSchema = new mongoose.Schema({
-    name: {
+const EvaluationSchema = mongoose.Schema({
+    product_id: {
         type: String,
         required: true,
     },
-    descricao: {
+    evaluatorProfile_id: {
         type: String,
         required: true,
     },
-    info: {
-        type: String,
-        required: true,
-    },
-    preco: {
+    stars: {
         type: Number,
-        required: false,
+    },
+    coment: {
+        type: String,
     },
     creatAt: {
         type: Date,
@@ -23,4 +21,4 @@ const ProdutoSchema = new mongoose.Schema({
     },
 });
 
-mongoose.model('Produto', ProdutoSchema);
+mongoose.model('Evaluation', EvaluationSchema);

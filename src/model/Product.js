@@ -1,30 +1,30 @@
 const mongoose = require("mongoose");
 
-const UsuarioSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
+    catalog_id: {
+        type: String,
+        required: true,
+    },
     name: {
         type: String,
         required: true,
     },
-    secondName: {
+    description: {
         type: String,
         required: true,
     },
-    cpf: {
+    info: {
         type: String,
         required: true,
     },
-    email: {
-        type: String,
-        required: true,
+    price: {
+        type: Number,
+        required: false,
     },
-    senha: {
-        type: String,
-        required: true,
-    },
-    createAt: {
+    creatAt: {
         type: Date,
         default: Date.now,
     },
 });
 
-mongoose.model('Usuario', UsuarioSchema );
+mongoose.model('Product', ProductSchema);

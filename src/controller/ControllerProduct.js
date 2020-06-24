@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Produto = mongoose.model("Produto");
+const Produto = mongoose.model("Product");
 
 module.exports = {
     async insert(req, res){
@@ -24,7 +24,6 @@ module.exports = {
     async remove(req, res){
         await Produto.findByIdAndRemove(req.params.id);
 
-        return res.send("Produto deletado com sucesso");
-
-    }
+        return res.status(200).send("Produto deletado com sucesso");
+    },
 };
