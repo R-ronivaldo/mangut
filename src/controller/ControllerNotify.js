@@ -37,14 +37,25 @@ module.exports = {
     },
 
     async selectByIdProduct(req, res){
-        const notify = await Notify.find({product_id: req.params.id});
+        const notify = await Notify.find({product: req.params.id});
         return res.json(notify);
     },
 
     async removeByIdProduct(req, res){
        
-        await Notify.remove({product_id: req.params.id});
+        await Notify.remove({product: req.params.id});
 
         return res.status(200).send("Notificações delatadas com sucesso");
+    },
+
+    //
+    // funcçao interna 
+    //
+
+    async removeByIdProductInternal(idProduct){
+        await Notify.remove({product: idProduct});
+
+        return res.status(200).send("Notifivaçao deletada com sucesso");
+    
     }
 };
