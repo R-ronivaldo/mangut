@@ -9,6 +9,10 @@ const NotifySchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    product_id:{
+        type: String,
+        require: true
+    },
     status: {
         type: Boolean,
         default: true,

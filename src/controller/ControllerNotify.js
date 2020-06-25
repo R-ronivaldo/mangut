@@ -32,5 +32,12 @@ module.exports = {
     async selectByIdProduto(req, res){
         const notify = await Notify.find({product_id: req.params.id});
         return res.json(notify);
+    },
+
+    async removeByIdProduct(req, res){
+       
+        await Notify.remove({product_id: req.params.id});
+
+        return res.status(200);
     }
 };
