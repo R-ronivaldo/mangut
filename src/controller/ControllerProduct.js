@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { removeByIdProduct } = require("./ControllerEvaluation");
 
 const Product = mongoose.model("Product");
 
@@ -31,4 +32,11 @@ module.exports = {
         const product = await Product.find({catalog_id: req.params.id});
         return res.json(product);
     },
+
+    async removeByIdCatalog (req, res) {
+        
+         await Product.remove({catalog_id: req.params.id});
+        
+        return res.status(200).send("OK");
+    }
 }

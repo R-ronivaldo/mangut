@@ -5,21 +5,21 @@ const User = mongoose.model("User");
 
 module.exports = {
     async insert(req, res){
-        const usuario = await User.create(req.body);
+        const user = await User.create(req.body);
 
-        return res.json(usuario);
+        return res.json(user);
     },
 
     async select(req, res){
-        const usuario = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id);
 
-        return res.json(usuario);
+        return res.json(user);
     },
 
     async update(req, res) {
-        const usuario = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-        return res.json(usuario);
+        return res.json(user);
     },
 
     async remove(req, res) {

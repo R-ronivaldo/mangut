@@ -26,18 +26,20 @@ router.post("/product", ControllerProduct.insert);
 router.put("/product/:id", ControllerProduct.update);
 router.delete("/product/:id", ControllerProduct.remove);
 router.get("/product/catalogid/:id", ControllerProduct.selectByIdCatalog);
+router.delete("/product/catalogid/:id", ControllerProduct.removeByIdCatalog);
 
 router.get("/evaluation/:id", ControllerEvaluation.selectById);
 router.post("/evaluation", ControllerEvaluation.insert);
 router.put("/evaluation/:id", ControllerEvaluation.update);
 router.delete("/evaluation/:id", ControllerEvaluation.remove);
-router.get("/evaluation/productid/:id", ControllerEvaluation.selectByIdProduto);
+router.get("/evaluation/productid/:id", ControllerEvaluation.selectByIdProduct);
+router.delete("/evaluation/produtoid/:id", ControllerEvaluation.removeByIdProduct);
 
 router.get("/notify/:id", ControllerNotify.selectById);
 router.post("/notify", ControllerNotify.insert);
 router.put("/notify/:id", ControllerNotify.update);
 router.delete("/notify/:id", ControllerNotify.remove);
-router.get("/notify/productid/:id", ControllerNotify.selectByIdProduto);
+router.get("/notify/productid/:id", ControllerNotify.selectByIdProduct);
 router.delete("/notify/productid/:id", ControllerNotify.removeByIdProduct);
 
 module.exports = router;

@@ -27,8 +27,15 @@ module.exports = {
         return res.status(200).send("Avaliação cadastrado com sucesso");
     },
 
-    async selectByIdProduto(req, res){
+    async selectByIdProduct(req, res){
         const evaluation = await Evaluation.find({product_id: req.params.id});
         return res.json(evaluation);
+    },
+
+    async removeByIdProduct(req, res) {
+
+        await Evaluation.remove({product_id: req.params.id});
+
+        return res.status(200).send("Avaliação deletada com sucesso");
     }
 };

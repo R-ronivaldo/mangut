@@ -29,7 +29,7 @@ module.exports = {
         return res.status(200).send("Notificação cadastrado com sucesso");
     },
 
-    async selectByIdProduto(req, res){
+    async selectByIdProduct(req, res){
         const notify = await Notify.find({product_id: req.params.id});
         return res.json(notify);
     },
@@ -38,6 +38,6 @@ module.exports = {
        
         await Notify.remove({product_id: req.params.id});
 
-        return res.status(200);
+        return res.status(200).send("Notificações delatadas com sucesso");
     }
 };
