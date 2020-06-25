@@ -1,13 +1,20 @@
 const mongoose = require("mongoose");
-const { removeByIdProduct } = require("./ControllerEvaluation");
-
 const Product = mongoose.model("Product");
+const ControllerCatalog = require("./ControllerCatalog");
 
 module.exports = {
     async insert(req, res){
-        const produto = await Product.create(req.body);
+        try {
+            const product = await Product.create(req.body);
 
-        return res.json(produto);
+            const products = await Product.find({catalog: req.body.catalog});
+            
+            const catalog = await ControllerCatalog.addProductOnCatalog(req.body.catalog,products);
+
+            return res.send({catalog});
+        } catch (err) {
+            return res.status(400).send({ error: 'Error creating product'});
+        }
     },
 
     async selectById(req,res){
@@ -38,5 +45,31 @@ module.exports = {
          await Product.remove({catalog_id: req.params.id});
         
         return res.status(200).send("OK");
-    }
-}
+    },
+
+    //
+    // FUNÇÕES INTERNAS
+    //
+
+    async addNotifyOnProduct(idProduct,notifies){
+
+        const product = await Product.findById(idProduct);
+
+        product.notifies = notifies;
+
+        const productUdp = await Product.findByIdAndUpdate(idProduct,product, {new:true});
+
+        return ({productUdp});
+    },
+
+    async addEvaluationOnProduct(idProduct,evaluations){
+
+        const product = await Product.findById(idProduct);
+
+        product.evaluations = evaluations;
+
+        const productUdp = await Product.findByIdAndUpdate(idProduct,product, {new:true});
+
+        return ({productUdp});
+    },
+};

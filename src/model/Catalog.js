@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
 const CatalogSchema = mongoose.Schema({
-    profile_id: {
-        type: String,
+   
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
     },
     name: {
@@ -13,6 +15,10 @@ const CatalogSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }],
     creatAt: {
         type: Date,
         default: Date.now,

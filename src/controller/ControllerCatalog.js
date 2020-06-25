@@ -1,34 +1,79 @@
 const mongoose = require("mongoose");
 
 const Catalog = mongoose.model('Catalog');
+const ControllerUser = require("./ControllerUser");
 
 module.exports = {
     async insert(req, res){
-        const catalog = await Catalog.create(req.body);
+        try {
+            const catalog = await Catalog.create(req.body);
 
-        return res.json(catalog);
+            const catalogs = await Catalog.find({user: req.body.user});
+            
+            const user = await ControllerUser.addCatalogOnUser(req.body.user,catalogs);
+
+            return res.send({user});
+        } catch (err) {
+            return res.status(400).send({ error: 'Error creating catalog'});
+        }
     },
 
     async selectById(req,res){
-        const catalog = await Catalog.findById(req.params.id);
+        try {
 
-        return res.json(catalog);
+            const catalog = await Catalog.findById(req.params.id);
+            return res.json(catalog);
+
+        } catch (err) {
+            return res.status(400).send({ error: 'Error loading catalog'});
+        }
     },
 
     async update(req, res){
-        const catalog = await Catalog.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        
-        return res.json(catalog);
+        try {
+
+            const catalog = await Catalog.findByIdAndUpdate(req.params.id, req.body, {new: true});
+            return res.json(catalog);
+
+        } catch (err) {
+            return res.status(400).send({ error: 'Error updating catalog'});
+        }
     },
 
     async remove(req, res){
-        await Catalog.findByIdAndRemove(req.params.id);
+        try {
 
-        return res.status(200).send("Catalog cadastrado com sucesso");
+            await Catalog.findByIdAndRemove(req.params.id);
+            return res.status(200).send("Catalog cadastrado com sucesso");
+
+        } catch (err) {
+            return res.status(400).send({ error: 'Error removing catalog'});
+        }
     },
 
     async selectByIdProfile(req, res){
-        const catalog = await Catalog.find({profile_id: req.params.id});
-        return res.json(catalog);
-    }
+        try {
+
+            const catalog = await Catalog.find({profile_id: req.params.id});
+            return res.json(catalog);
+
+        } catch (err) {
+            return res.status(400).send({ error: 'Error loading catalog'});
+        }
+    },
+
+    //
+    // FUNÇÕES INTERNAS
+    //
+
+    async addProductOnCatalog(idCatalog,products){
+
+        const catalog = await Catalog.findById(idCatalog);
+
+        catalog.products = products;
+
+        const catalogUdp = await Catalog.findByIdAndUpdate(idCatalog,catalog, {new:true});
+
+        return ({catalogUdp});
+    },
 };

@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    catalogs: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Catalog'
+    }],
     createAt: {
         type: Date,
         default: Date.now,

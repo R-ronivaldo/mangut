@@ -5,41 +5,80 @@ const User = mongoose.model("User");
 
 module.exports = {
     async insert(req, res){
-        const user = await User.create(req.body);
-
-        return res.json(user);
+        try {
+            const user = await User.create(req.body);
+            return res.json(user);
+        } catch (err) {
+            return res.status(400).send({ error: 'Error creating user'});
+        }
     },
 
     async select(req, res){
-        const user = await User.findById(req.params.id);
-
-        return res.json(user);
+        try {
+            const user = await User.findById(req.params.id).populate('catalogs');
+            return res.json(user);
+        } catch (err) {
+            return res.status(400).send({ error: 'Error loading users'});
+        }
     },
 
     async update(req, res) {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        try {
 
-        return res.json(user);
+            const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            return res.json(user);
+        
+        } catch (err) {
+            return res.status(400).send({ error: 'Error updationd user'});
+        }
+        
     },
 
     async remove(req, res) {
-        await User.findByIdAndRemove(req.params.id);
+        try {
 
-        return res.status(200).send("Usuário deletado com sucesso!");
+            await User.findByIdAndRemove(req.params.id);
+            return res.status(200).send("Usuário deletado com sucesso!");
+        
+        } catch (err) {
+            return res.status(400).send({ error: 'Error removing user'});
+        }
     },
     async acess(req, res) {
-        const { email, password } = req.body;
 
-        const user = await User.findOne({ email }).select('+password');
+        try {
 
-        if (!user)
-        return res.status(400).send({ error: 'User not found' });
+            const { email, password } = req.body;
 
-        if (!await bcrypt.compare(password, user.password))
-        return res.status(400).send({ error: 'User invalid' });
+            const user = await User.findOne({ email }).select('+password');
 
-        user.password = undefined;
+            if (!user)
+            return res.status(400).send({ error: 'User not found' });
 
-        res.send({ user });
+            if (!await bcrypt.compare(password, user.password))
+            return res.status(400).send({ error: 'User invalid' });
+
+            user.password = undefined;
+
+            res.send({ user });
+        
+        } catch (err) {
+            return res.status(400).send({ error: 'Error singing user'});
+        }
+    },
+
+     //
+    // FUNÇÕES INTERNAS
+    //
+
+    async addCatalogOnUser(idUser,catalogs){
+
+        const user = await User.findById(idUser);
+
+        user.catalogs = catalogs;
+
+        const userUdp = await User.findByIdAndUpdate(idUser,user, {new:true});
+
+        return ({userUdp});
     },
 };

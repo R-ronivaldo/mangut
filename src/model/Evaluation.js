@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const EvaluationSchema = mongoose.Schema({
-    product_id: {
-        type: String,
-        required: true,
-    },
     evaluatorProfile_id: {
         type: String,
         required: true,
@@ -14,6 +10,11 @@ const EvaluationSchema = mongoose.Schema({
     },
     coment: {
         type: String,
+    },
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
     },
     creatAt: {
         type: Date,

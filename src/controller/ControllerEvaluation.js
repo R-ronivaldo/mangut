@@ -1,12 +1,22 @@
 const mongoose = require("mongoose");
 
 const Evaluation = mongoose.model('Evaluation');
+const ControllerProduct = require("./ControllerProduct");
 
 module.exports = {
     async insert(req, res){
-        const evaluation = await Evaluation.create(req.body);
+        try {
+            
+            const evaluation = await Evaluation.create(req.body);
+            
+            const evaluations = await Evaluation.find({product: req.body.product});
 
-        return res.json(evaluation);
+            const product = await ControllerProduct.addEvaluationOnProduct(req.body.product,evaluations);
+
+            return res.send({product});
+        } catch (err) {
+            return res.status(400).send({ error: 'Error creating evaluation'});
+        }
     },
 
     async selectById(req,res){

@@ -9,9 +9,10 @@ const NotifySchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    product_id:{
-        type: String,
-        require: true
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
     },
     status: {
         type: Boolean,

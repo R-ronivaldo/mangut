@@ -1,14 +1,21 @@
 const mongoose = require("mongoose");
-const { selectById } = require("./ControllerProduct");
-const { selectByIdProduto } = require("./ControllerEvaluation");
 
 const Notify = mongoose.model('Notify');
+const ControllerProduct = require("./ControllerProduct");
 
 module.exports = {
     async insert(req, res){
-        const notify = await Notify.create(req.body);
+        try {
+            const notify = await Notify.create(req.body);
 
-        return res.json(notify);
+            const notifies = await Notify.find({product: req.body.product});
+
+            const product = await ControllerProduct.addNotifyOnProduct(req.body.product,notifies);
+
+            return res.send({product});
+        } catch (err) {
+            return res.status(400).send({ error: 'Error creating notify'});
+        }
     },
 
     async selectById(req,res){
