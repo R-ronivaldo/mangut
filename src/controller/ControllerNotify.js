@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { selectById } = require("./ControllerProduct");
+const { selectByIdProduto } = require("./ControllerEvaluation");
 
 const Notify = mongoose.model('Notify');
 
@@ -9,7 +11,7 @@ module.exports = {
         return res.json(notify);
     },
 
-    async select(req,res){
+    async selectById(req,res){
         const notify = await Notify.findById(req.params.id);
 
         return res.json(notify);
@@ -26,4 +28,9 @@ module.exports = {
 
         return res.status(200).send("Notificação cadastrado com sucesso");
     },
+
+    async selectByIdProduto(req, res){
+        const notify = await Notify.find({product_id: req.params.id});
+        return res.json(notify);
+    }
 };

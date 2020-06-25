@@ -9,7 +9,7 @@ module.exports = {
         return res.json(catalog);
     },
 
-    async select(req,res){
+    async selectById(req,res){
         const catalog = await Catalog.findById(req.params.id);
 
         return res.json(catalog);
@@ -26,4 +26,9 @@ module.exports = {
 
         return res.status(200).send("Catalog cadastrado com sucesso");
     },
+
+    async selectByIdProfile(req, res){
+        const catalog = await Catalog.find({profile_id: req.params.id});
+        return res.json(catalog);
+    }
 };
