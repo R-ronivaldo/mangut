@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const Product = mongoose.model('Product');
 const Catalog = mongoose.model('Catalog');
 const ControllerUser = require("./ControllerUser");
 
@@ -41,13 +42,28 @@ module.exports = {
     },
 
     async remove(req, res){
+        const ControllerProduct = require("./ControllerProduct");
+
         try {
 
-            await Catalog.findByIdAndRemove(req.params.id);
-            return res.status(200).send("Catalog cadastrado com sucesso");
+            const idCatalog = req.params.id;
+
+            const products = await Product.find({catalog: idCatalog});
+          // console.log(products);
+
+           products.map(async product => {
+               
+            await ControllerProduct.removeByIdProductInternal(product._id);
+
+           })
+           
+            await Catalog.findByIdAndRemove(idCatalog);
+            return res.status(200).send("Catalog removido com sucesso");
 
         } catch (err) {
+
             return res.status(400).send({ error: 'Error removing catalog'});
+
         }
     },
 

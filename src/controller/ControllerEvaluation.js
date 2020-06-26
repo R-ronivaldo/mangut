@@ -5,13 +5,16 @@ const ControllerProduct = require("./ControllerProduct");
 
 module.exports = {
     async insert(req, res){
+        
         try {
             
             const evaluation = await Evaluation.create(req.body);
             
-            const evaluations = await Evaluation.find({product: req.body.product});
+            const idProduct = req.body.product;
+            const evaluations = await Evaluation.find({product: idProduct});
 
-            const product = await ControllerProduct.addEvaluationOnProduct(req.body.product,evaluations);
+            
+            const product = await ControllerProduct.addEvaluationOnProduct(idProduct,evaluations);
 
             return res.send({product});
         } catch (err) {
@@ -47,5 +50,15 @@ module.exports = {
         await Evaluation.remove({product_id: req.params.id});
 
         return res.status(200).send("Avaliação deletada com sucesso");
-    }
+    },
+
+
+
+    //FUNÇÕES INTERNAS
+
+    async removeByIdProductInternal(idProduct){
+        
+        return await Evaluation.remove({product: idProduct});
+
+     }
 };

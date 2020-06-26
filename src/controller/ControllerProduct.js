@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Product = mongoose.model("Product");
 const ControllerCatalog = require("./ControllerCatalog");
 
+
 module.exports = {
     async insert(req, res){
         try {
@@ -29,10 +30,30 @@ module.exports = {
         return res.json(produto);
     },
 
-    async remove(req, res){
-        await Product.findByIdAndRemove(req.params.id);
+    async remove(req, res){ 
 
-        return res.status(200).send("Produto deletado com sucesso");
+        const ControllerEvaluation = require("./ControllerEvaluation");
+        const ControllerNotify = require("./ControllerNotify");       
+
+        try {
+       
+            const idProduct = req.params.id;
+            
+            await ControllerEvaluation.removeByIdProductInternal(idProduct);
+
+            await ControllerNotify.removeByIdProductInternal(idProduct);
+
+            await Product.remove({_id: idProduct});
+            
+            return res.status(200).send("Produto deletado com sucesso");
+
+
+        } catch (err) {
+
+            return res.status(400).send("Erro ao deletar notificação");
+
+        }
+
     },
 
     async selectByIdCatalog(req, res){
@@ -63,7 +84,6 @@ module.exports = {
     },
 
     async addEvaluationOnProduct(idProduct,evaluations){
-
         const product = await Product.findById(idProduct);
 
         product.evaluations = evaluations;
@@ -71,5 +91,27 @@ module.exports = {
         const productUdp = await Product.findByIdAndUpdate(idProduct,product, {new:true});
 
         return ({productUdp});
+    },
+
+    async removeByIdProductInternal(idProduct){ 
+
+        const ControllerEvaluation = require("./ControllerEvaluation");
+        const ControllerNotify = require("./ControllerNotify");       
+
+        try {
+            
+            await ControllerEvaluation.removeByIdProductInternal(idProduct);
+
+            await ControllerNotify.removeByIdProductInternal(idProduct);
+
+            return await Product.remove({_id: idProduct});
+
+
+        } catch (err) {
+
+            return;
+
+        }
+
     },
 };

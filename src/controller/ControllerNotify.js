@@ -8,10 +8,13 @@ module.exports = {
         try {
             const notify = await Notify.create(req.body);
 
-            const notifies = await Notify.find({product: req.body.product});
+            const idProduct = req.body.product;
 
-            const product = await ControllerProduct.addNotifyOnProduct(req.body.product,notifies);
+            const notifies = await Notify.find({product: idProduct});
+            
+            const product = await ControllerProduct.addNotifyOnProduct(idProduct,notifies);
 
+           
             return res.send({product});
         } catch (err) {
             return res.status(400).send({ error: 'Error creating notify'});
@@ -53,9 +56,9 @@ module.exports = {
     //
 
     async removeByIdProductInternal(idProduct){
-        await Notify.remove({product: idProduct});
+        
+        return await Notify.remove({product: idProduct});
 
-        return res.status(200).send("Notifivaçao deletada com sucesso");
-    
-    }
+
+     }
 };
