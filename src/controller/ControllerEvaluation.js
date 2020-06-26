@@ -52,9 +52,9 @@ module.exports = {
         return res.status(200).send("Avaliação deletada com sucesso");
     },
 
-
-
-    //FUNÇÕES INTERNAS
+    //
+    // FUNÇÕES INTERNAS
+    //
 
     async removeByIdProductInternal(idProduct){
         

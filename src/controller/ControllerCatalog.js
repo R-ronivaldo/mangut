@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const Product = mongoose.model('Product');
 const Catalog = mongoose.model('Catalog');
+
 const ControllerUser = require("./ControllerUser");
 
 module.exports = {
@@ -21,10 +22,9 @@ module.exports = {
 
     async selectById(req,res){
         try {
-
             const catalog = await Catalog.findById(req.params.id);
+            
             return res.json(catalog);
-
         } catch (err) {
             return res.status(400).send({ error: 'Error loading catalog'});
         }
@@ -32,47 +32,42 @@ module.exports = {
 
     async update(req, res){
         try {
-
             const catalog = await Catalog.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    
             return res.json(catalog);
-
         } catch (err) {
             return res.status(400).send({ error: 'Error updating catalog'});
         }
     },
 
     async remove(req, res){
+
         const ControllerProduct = require("./ControllerProduct");
-
+        
         try {
-
             const idCatalog = req.params.id;
 
             const products = await Product.find({catalog: idCatalog});
-          // console.log(products);
 
-           products.map(async product => {
+            products.map(async product => {
                
-            await ControllerProduct.removeByIdProductInternal(product._id);
+                await ControllerProduct.removeByIdProductInternal(product._id);
 
-           })
+           });
            
             await Catalog.findByIdAndRemove(idCatalog);
-            return res.status(200).send("Catalog removido com sucesso");
 
+            return res.status(200).send("Catalog successfully removed");
         } catch (err) {
-
             return res.status(400).send({ error: 'Error removing catalog'});
-
         }
     },
 
     async selectByIdProfile(req, res){
         try {
-
             const catalog = await Catalog.find({profile_id: req.params.id});
+            
             return res.json(catalog);
-
         } catch (err) {
             return res.status(400).send({ error: 'Error loading catalog'});
         }

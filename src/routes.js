@@ -7,13 +7,13 @@ const ControllerProduct = require("./controller/ControllerProduct");
 const ControllerCatalog = require("./controller/ControllerCatalog");
 const ControllerEvaluation = require("./controller/ControllerEvaluation");
 const ControllerNotify = require("./controller/ControllerNotify");
-
+const ControllerAuth = require("./controller/ControllerAuth");
 
 router.get("/user/:id", ControllerUser.select);
 router.post("/user", ControllerUser.insert);
 router.put("/user/:id", ControllerUser.update);
 router.delete("/user/:id", ControllerUser.remove);
-router.post("/authenticate", ControllerUser.acess);
+router.post("/authenticate", ControllerAuth.acess);
 
 router.get("/catalog/:id", ControllerCatalog.selectById);
 router.post("/catalog", ControllerCatalog.insert);

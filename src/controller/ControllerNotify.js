@@ -52,13 +52,10 @@ module.exports = {
     },
 
     //
-    // funcçao interna 
+    // FUNÇÕES INTERNAS
     //
 
     async removeByIdProductInternal(idProduct){
-        
         return await Notify.remove({product: idProduct});
-
-
-     }
+    }
 };

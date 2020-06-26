@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
-const Product = mongoose.model("Product");
-const ControllerCatalog = require("./ControllerCatalog");
 
+const Product = mongoose.model("Product");
+
+const ControllerCatalog = require("./ControllerCatalog");
 
 module.exports = {
     async insert(req, res){
@@ -31,12 +32,9 @@ module.exports = {
     },
 
     async remove(req, res){ 
-
         const ControllerEvaluation = require("./ControllerEvaluation");
         const ControllerNotify = require("./ControllerNotify");       
-
         try {
-       
             const idProduct = req.params.id;
             
             await ControllerEvaluation.removeByIdProductInternal(idProduct);
@@ -45,24 +43,21 @@ module.exports = {
 
             await Product.remove({_id: idProduct});
             
-            return res.status(200).send("Produto deletado com sucesso");
-
-
+            return res.status(200).send("Product successfully deleted");
         } catch (err) {
-
-            return res.status(400).send("Erro ao deletar notificação");
-
+            return res.status(400).send("Error deleting notification");
         }
 
     },
 
     async selectByIdCatalog(req, res){
         const product = await Product.find({catalog_id: req.params.id});
+       
         return res.json(product);
     },
 
     async removeByIdCatalog (req, res) {
-        
+
          await Product.remove({catalog_id: req.params.id});
         
         return res.status(200).send("OK");
@@ -94,23 +89,16 @@ module.exports = {
     },
 
     async removeByIdProductInternal(idProduct){ 
-
         const ControllerEvaluation = require("./ControllerEvaluation");
         const ControllerNotify = require("./ControllerNotify");       
-
         try {
-            
             await ControllerEvaluation.removeByIdProductInternal(idProduct);
 
             await ControllerNotify.removeByIdProductInternal(idProduct);
 
             return await Product.remove({_id: idProduct});
-
-
         } catch (err) {
-
             return;
-
         }
 
     },
