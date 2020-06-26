@@ -87,4 +87,18 @@ module.exports = {
 
         return ({catalogUdp});
     },
+
+    async removeByIdCatalogInternal(idCatalog){ 
+        const ControllerProduct = require("./ControllerProduct");
+              
+        try {
+
+            await ControllerProduct.removeByIdProductInternal(idCatalog);
+
+            return await Catalog.remove({_id: idCatalog});
+        } catch (err) {
+            return;
+        }
+
+    },
 };

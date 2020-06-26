@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-
+const Catalog = mongoose.model("Catalog");
 const User = mongoose.model("User");
 
 const authConfig = require("../config/Auth.json");
@@ -46,16 +46,28 @@ module.exports = {
         
     },
 
-    async remove(req, res) {
+    async remove(req, res){
+
+        const ControllerCatalog = require("./ControllerCatalog");
+        
         try {
-            await User.findByIdAndRemove(req.params.id);
+            const idUser = req.params.id;
+
+            const catalogs = await Catalog.find({user: idUser});
+
+            catalogs.map(async catalog => {
+               
+                await ControllerCatalog.removeByIdCatalogInternal(catalog._id);
+
+           });
            
-            return res.status(200).send("user successfully removed");
+            await User.findByIdAndRemove(idUser);
+
+            return res.status(200).send("User successfully removed");
         } catch (err) {
-            return res.status(400).send({ error: 'Error removing user'});
+            return res.status(400).send({ error: 'Error removing User'});
         }
     },
-
     //
     // FUNÇÕES INTERNAS
     //
@@ -70,4 +82,6 @@ module.exports = {
 
         return ({userUdp});
     },
+
+
 };
