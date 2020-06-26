@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Notify = mongoose.model('Notify');
+
 const ControllerProduct = require("./ControllerProduct");
 
 module.exports = {
@@ -36,11 +37,12 @@ module.exports = {
     async remove(req, res){
         await Notify.findByIdAndRemove(req.params.id);
 
-        return res.status(200).send("Notificação cadastrado com sucesso");
+        return res.status(200).send("Notification successfully registered");
     },
 
     async selectByIdProduct(req, res){
         const notify = await Notify.find({product: req.params.id});
+
         return res.json(notify);
     },
 
@@ -48,7 +50,7 @@ module.exports = {
        
         await Notify.remove({product: req.params.id});
 
-        return res.status(200).send("Notificações delatadas com sucesso");
+        return res.status(200).send("Notifications successfully reported");
     },
 
     //

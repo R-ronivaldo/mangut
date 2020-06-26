@@ -1,7 +1,16 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const authConfig = require("../config/Auth.json");
 
 const User = mongoose.model("User");
+
+function generateToken(params = {}) {
+    return jwt.sign(params, authConfig.secret,{
+        expiresIn: 600,
+    });           
+}
 
 module.exports = {
     async acess(req, res) {
@@ -19,10 +28,17 @@ module.exports = {
 
             user.password = undefined;
 
-            res.send({ user });
-        
+            //Gerar token para usuário
+
+            res.send({ 
+                user,
+                token: generateToken({ ud: user.id}),
+             });        
         } catch (err) {
             return res.status(400).send({ error: 'Error singing user'});
         }
+    },
+    async createToken(user){
+        return ({user, token: generateToken({ id: user.id})})
     },
 }

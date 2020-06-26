@@ -1,13 +1,25 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const User = mongoose.model("User");
+
+const authConfig = require("../config/Auth.json");
+
+function generateToken(params = {}) {
+    return jwt.sign(params, authConfig.secret,{
+        expiresIn: 600,
+    });           
+}
 
 module.exports = {
     async insert(req, res){
         try {
             const user = await User.create(req.body);
            
-            return res.json(user);
+            return res.send(
+                {user,
+                token: generateToken({ id: user.id}), 
+                });
         } catch (err) {
             return res.status(400).send({ error: 'Error creating user'});
         }

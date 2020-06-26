@@ -7,12 +7,11 @@ module.exports = {
     async insert(req, res){
         
         try {
-            
             const evaluation = await Evaluation.create(req.body);
             
             const idProduct = req.body.product;
-            const evaluations = await Evaluation.find({product: idProduct});
 
+            const evaluations = await Evaluation.find({product: idProduct});
             
             const product = await ControllerProduct.addEvaluationOnProduct(idProduct,evaluations);
 
@@ -37,19 +36,19 @@ module.exports = {
     async remove(req, res){
         await Evaluation.findByIdAndRemove(req.params.id);
 
-        return res.status(200).send("Avaliação cadastrado com sucesso");
+        return res.status(200).send("Evaluation registered successfully");
     },
 
     async selectByIdProduct(req, res){
         const evaluation = await Evaluation.find({product_id: req.params.id});
+
         return res.json(evaluation);
     },
 
     async removeByIdProduct(req, res) {
-
         await Evaluation.remove({product_id: req.params.id});
 
-        return res.status(200).send("Avaliação deletada com sucesso");
+        return res.status(200).send("Evaluation successfully deleted");
     },
 
     //

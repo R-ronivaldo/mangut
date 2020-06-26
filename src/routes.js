@@ -1,5 +1,7 @@
 const express = require("express");
 
+const authMiddleware = require("./middlewares/Auth");
+
 const router = express.Router();
 
 const ControllerUser = require("./controller/ControllerUser");
@@ -14,6 +16,8 @@ router.post("/user", ControllerUser.insert);
 router.put("/user/:id", ControllerUser.update);
 router.delete("/user/:id", ControllerUser.remove);
 router.post("/authenticate", ControllerAuth.acess);
+
+router.use(authMiddleware);
 
 router.get("/catalog/:id", ControllerCatalog.selectById);
 router.post("/catalog", ControllerCatalog.insert);
