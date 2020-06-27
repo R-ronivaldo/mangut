@@ -6,5 +6,4 @@ const ControllerAuth = require("../../controller/ControllerAuth");
 
 authenticateRouter.post("/", ControllerAuth.acess);
 
-
 module.exports = authenticateRouter;

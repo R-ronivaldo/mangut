@@ -37,7 +37,7 @@ module.exports = {
     async remove(req, res){
         await Notify.findByIdAndRemove(req.params.id);
 
-        return res.status(200).send("Notification successfully registered");
+        return res.status(200).send("Notification successfully deleted");
     },
 
     async selectByIdProduct(req, res){

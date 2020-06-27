@@ -1,18 +1,17 @@
 const express = require("express");
 
-const authMiddleware = require("../../middlewares/Auth");
-
 const productRouter = express.Router();
-
 
 const ControllerProduct = require("../../controller/ControllerProduct");
 
-// funÇoes sem token
+const authMiddleware = require("../../middlewares/Auth");
+
+// FUNÇÕES SEM TOKEN
 productRouter.get("/product/catalogid/:id", ControllerProduct.selectByIdCatalog);
 
 productRouter.use(authMiddleware)
 
-// funÇoes com token
+// FUNÇÕES COM TOKEN
 productRouter.post("/", ControllerProduct.insert);
 productRouter.put("/:id", ControllerProduct.update);
 productRouter.delete("/:id", ControllerProduct.remove);

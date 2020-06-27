@@ -2,9 +2,7 @@ const express = require("express");
 
 const userRouter = express.Router();
 
-
 const ControllerUser = require("../../controller/ControllerUser");
-
 
 userRouter.post("/", ControllerUser.insert);
 userRouter.put("/:id", ControllerUser.update);
