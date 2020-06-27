@@ -8,14 +8,14 @@ const evaluationRouter = express.Router();
 const ControllerEvaluation = require("../../controller/ControllerEvaluation");
 
 // funÇoes semm token
-evaluationRouter.get("/evaluation/productid/:id", ControllerEvaluation.selectByIdProduct);
+evaluationRouter.get("/productid/:id", ControllerEvaluation.selectByIdProduct);
 
 evaluationRouter.use(authMiddleware);
 
 // funÇoes comm token
-evaluationRouter.post("/evaluation", ControllerEvaluation.insert);
-evaluationRouter.put("/evaluation/:id", ControllerEvaluation.update);
-evaluationRouter.delete("/evaluation/:id", ControllerEvaluation.remove);
-evaluationRouter.delete("/evaluation/produtoid/:id", ControllerEvaluation.removeByIdProduct);
+evaluationRouter.post("/", ControllerEvaluation.insert);
+evaluationRouter.put("/:id", ControllerEvaluation.update);
+evaluationRouter.delete("/:id", ControllerEvaluation.remove);
+evaluationRouter.delete("/produtoid/:id", ControllerEvaluation.removeByIdProduct);
 
 module.exports = evaluationRouter;

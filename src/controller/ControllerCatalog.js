@@ -90,15 +90,22 @@ module.exports = {
 
     async removeByIdCatalogInternal(idCatalog){ 
         const ControllerProduct = require("./ControllerProduct");
-              
+        
         try {
 
-            await ControllerProduct.removeByIdProductInternal(idCatalog);
+            const products = await Product.find({catalog: idCatalog});
 
-            return await Catalog.remove({_id: idCatalog});
+            products.map(async product => {
+               
+                await ControllerProduct.removeByIdProductInternal(product._id);
+
+           });
+           
+            await Catalog.findByIdAndRemove(idCatalog);
+
+            return res.status(200).send("Catalog successfully removed");
         } catch (err) {
-            return;
+            return res.status(400).send({ error: 'Error removing catalog'});
         }
-
     },
 };
