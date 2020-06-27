@@ -100,12 +100,10 @@ module.exports = {
                 await ControllerProduct.removeByIdProductInternal(product._id);
 
            });
-           
-            await Catalog.findByIdAndRemove(idCatalog);
 
-            return res.status(200).send("Catalog successfully removed");
+            return await Catalog.findByIdAndRemove(idCatalog); 
         } catch (err) {
-            return res.status(400).send({ error: 'Error removing catalog'});
+            return send({ error: 'Error removing catalog'});
         }
     },
 };
