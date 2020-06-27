@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost/nodeapi', { useNewUrlParser: true });
 requireDir("./src/model");
 
 //chamando as rotas
-app.use("/", require("./src/routrs/routes"));
+app.use("/", require("./src/routers/router"));
 
 //iniciando o server
 app.listen(3001);
