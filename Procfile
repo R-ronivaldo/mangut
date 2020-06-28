@@ -1,1 +1,1 @@
-web: yarn startServer
+web: yarn iniciar

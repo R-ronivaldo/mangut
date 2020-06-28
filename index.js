@@ -21,4 +21,4 @@ app.use(cors());
 app.use("/", require("./src/routers/router"));
 
 //iniciando o server
-app.listen(process.env.PORT || 3001);
+app.listen(process.env.PORT);
