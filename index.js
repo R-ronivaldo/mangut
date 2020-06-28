@@ -10,7 +10,7 @@ app = express();
 app.use(express.json());
 
 //connect db
-mongoose.connect('mongodb+srv://deploy:under2020@cluster0.0jkcc.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://deploy:under2020@cluster0.0jkcc.gcp.mongodb.net/mangut?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 //chamar todos os models
 requireDir("./src/model");
