@@ -1,1 +1,1 @@
-web: npm run iniciar
+web: npm run startServeHeroku
