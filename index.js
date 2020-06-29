@@ -11,9 +11,9 @@ app.use(express.json());
 
 //connect db
 //Bando do mongodb.com.br
-mongoose.connect('mongodb+srv://deploy:under2020@cluster0.0jkcc.gcp.mongodb.net/mangut?retryWrites=true&w=majority', { useNewUrlParser: true });
+//mongoose.connect('mongodb+srv://deploy:under2020@cluster0.0jkcc.gcp.mongodb.net/mangut?retryWrites=true&w=majority', { useNewUrlParser: true });
 //Banco do localhost
-//mongoose.connect('mongodb://localhost:27017/nodeapi', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/nodeapi', { useNewUrlParser: true });
 
 //chamar todos os models
 requireDir("./src/model");
