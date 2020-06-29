@@ -16,7 +16,7 @@ module.exports = {
             const product = await ControllerProduct.addNotifyOnProduct(idProduct,notifies);
 
            
-            return res.send({product});
+            return res.send({notify});
         } catch (err) {
             return res.status(400).send({ error: 'Error creating notify'});
         }

@@ -14,7 +14,7 @@ module.exports = {
             
             const user = await ControllerUser.addCatalogOnUser(req.body.user,catalogs);
 
-            return res.send({user});
+            return res.send({catalog});
         } catch (err) {
             return res.status(400).send({ error: 'Error creating catalog'});
         }

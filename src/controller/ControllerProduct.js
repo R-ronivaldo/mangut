@@ -13,7 +13,7 @@ module.exports = {
             
             const catalog = await ControllerCatalog.addProductOnCatalog(req.body.catalog,products);
 
-            return res.send({catalog});
+            return res.send({product});
         } catch (err) {
             return res.status(400).send({ error: 'Error creating product'});
         }

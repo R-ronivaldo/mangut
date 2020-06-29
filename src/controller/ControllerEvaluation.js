@@ -4,18 +4,32 @@ const Evaluation = mongoose.model('Evaluation');
 const ControllerProduct = require("./ControllerProduct");
 
 module.exports = {
-    async insert(req, res){
-        
+    async insertOrUpdate(req, res){
         try {
-            const evaluation = await Evaluation.create(req.body);
-            
-            const idProduct = req.body.product;
+            const evaluation = await Evaluation.findOne({evaluatorProfile_id: req.body.evaluatorProfile_id});
 
-            const evaluations = await Evaluation.find({product: idProduct});
-            
-            const product = await ControllerProduct.addEvaluationOnProduct(idProduct,evaluations);
+            if (evaluation){
+                
+                evaluation.stars = req.body.stars;
+                
+                evaluation.coment = req.body.coment;
 
-            return res.send({product});
+                const evaluationUpd = await Evaluation.findByIdAndUpdate(evaluation.id,evaluation,{new:true});
+
+                return res.send({evaluationUpd});
+            
+            } else {
+
+                const evaluationNew = await Evaluation.create(req.body);
+            
+                const idProduct = req.body.product;
+
+                const evaluations = await Evaluation.find({product: idProduct});
+                
+                const product = await ControllerProduct.addEvaluationOnProduct(idProduct,evaluations);
+
+                return res.send({evaluationNew});
+            }
         } catch (err) {
             return res.status(400).send({ error: 'Error creating evaluation'});
         }
@@ -24,12 +38,6 @@ module.exports = {
     async selectById(req,res){
         const evaluation = await Evaluation.findById(req.params.id);
 
-        return res.json(evaluation);
-    },
-
-    async update(req, res){
-        const evaluation = await Evaluation.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        
         return res.json(evaluation);
     },
 
