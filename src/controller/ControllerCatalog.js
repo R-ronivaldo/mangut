@@ -65,7 +65,7 @@ module.exports = {
 
     async selectByIdProfile(req, res){
         try {
-            const catalog = await Catalog.find({profile_id: req.params.id});
+            const catalog = await Catalog.find({user: req.params.id});
             
             return res.json(catalog);
         } catch (err) {

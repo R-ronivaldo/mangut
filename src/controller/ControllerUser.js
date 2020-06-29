@@ -27,7 +27,7 @@ module.exports = {
 
     async select(req, res){
         try {
-            const user = await User.findById(req.params.id).populate('catalogs');
+            const user = await User.findById(req.params.id);
             
             return res.json(user);
         } catch (err) {

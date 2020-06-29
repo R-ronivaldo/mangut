@@ -1,18 +1,16 @@
 const express = require("express");
 
-const authMiddleware = require("../../middlewares/Auth");
-
 const catalogRouter = express.Router();
 
 const ControllerCatalog = require("../../controller/ControllerCatalog");
 
+const authMiddleware = require("../../middlewares/Auth");
+
 // FUNÇÕES SEM TOKEN
 catalogRouter.get("/profileid/:id", ControllerCatalog.selectByIdProfile);
-
-catalogRouter.use(authMiddleware);
 // FUNÇÕES COM TOKEN
-catalogRouter.post("/", ControllerCatalog.insert);
-catalogRouter.put("/:id", ControllerCatalog.update);
-catalogRouter.delete("/:id", ControllerCatalog.remove);
+catalogRouter.post("/", authMiddleware, ControllerCatalog.insert);
+catalogRouter.put("/:id", authMiddleware, ControllerCatalog.update);
+catalogRouter.delete("/:id", authMiddleware, ControllerCatalog.remove);
 
 module.exports = catalogRouter;

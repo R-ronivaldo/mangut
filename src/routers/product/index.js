@@ -8,13 +8,10 @@ const authMiddleware = require("../../middlewares/Auth");
 
 // FUNÇÕES SEM TOKEN
 productRouter.get("/product/catalogid/:id", ControllerProduct.selectByIdCatalog);
-
-productRouter.use(authMiddleware)
-
 // FUNÇÕES COM TOKEN
-productRouter.post("/", ControllerProduct.insert);
-productRouter.put("/:id", ControllerProduct.update);
-productRouter.delete("/:id", ControllerProduct.remove);
-productRouter.delete("/catalogid/:id", ControllerProduct.removeByIdCatalog);
+productRouter.post("/", authMiddleware, ControllerProduct.insert);
+productRouter.put("/:id", authMiddleware, ControllerProduct.update);
+productRouter.delete("/:id", authMiddleware, ControllerProduct.remove);
+productRouter.delete("/catalogid/:id", authMiddleware, ControllerProduct.removeByIdCatalog);
 
 module.exports = productRouter;

@@ -8,12 +8,9 @@ const authMiddleware = require("../../middlewares/Auth");
 
 // FUNÇÕES SEM TOKEN
 evaluationRouter.get("/productid/:id", ControllerEvaluation.selectByIdProduct);
-
-evaluationRouter.use(authMiddleware);
-
 // FUNÇÕES COM TOKEN
-evaluationRouter.post("/", ControllerEvaluation.insertOrUpdate);
-evaluationRouter.delete("/:id", ControllerEvaluation.remove);
-evaluationRouter.delete("/produtoid/:id", ControllerEvaluation.removeByIdProduct);
+evaluationRouter.post("/", authMiddleware, ControllerEvaluation.insertOrUpdate);
+evaluationRouter.delete("/:id", authMiddleware, ControllerEvaluation.remove);
+evaluationRouter.delete("/produtoid/:id", authMiddleware, ControllerEvaluation.removeByIdProduct);
 
 module.exports = evaluationRouter;
