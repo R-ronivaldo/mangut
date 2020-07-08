@@ -23,6 +23,9 @@ const UserSchema = new mongoose.Schema({
         required: true,
         select: false,
     },
+    photo: {
+        type: String
+    },
     profile: {
         type: String,
         required: true,
