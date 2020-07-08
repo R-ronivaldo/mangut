@@ -11,11 +11,3 @@
 - cors: tratamento de visibilidade de requisição 
 
 # Banco de dados MongoDB
-
-# Front-end
-## React:
-### dependências
-- react
-- react-scripts
-- react-router-dom
- 
