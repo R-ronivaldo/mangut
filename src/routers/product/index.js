@@ -7,7 +7,7 @@ const ControllerProduct = require("../../controller/ControllerProduct");
 const authMiddleware = require("../../middlewares/Auth");
 
 // FUNÇÕES SEM TOKEN
-productRouter.get("/product/catalogid/:id", ControllerProduct.selectByIdCatalog);
+productRouter.get("/catalogid/:id", ControllerProduct.selectByIdCatalog);
 
 productRouter.use(authMiddleware)
 
