@@ -48,7 +48,7 @@ module.exports = {
     },
 
     async selectByIdProduct(req, res){
-        const evaluation = await Evaluation.find({product_id: req.params.id});
+        const evaluation = await Evaluation.find({product: req.params.id});
 
         return res.json(evaluation);
     },
