@@ -51,7 +51,7 @@ module.exports = {
     },
 
     async selectByIdCatalog(req, res){
-        const product = await Product.find({catalog_id: req.params.id});
+        const product = await Product.find({catalog: req.params.id});
        
         return res.json(product);
     },
