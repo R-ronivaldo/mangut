@@ -9,8 +9,14 @@ const limitReached = (req, res) => {
 const ipLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
     max: 10, // limit each IP to 100 requests per windowMs 
-    onLimitReached: limitReached, // called once when max is reached
-    handler: limitReached, // called for each subsequent request once max is reached
+    onLimitReached: function (req, res, options) {
+                        log.warn({ ip: req.ip }, "Rate limiter triggered");
+                        renderError(req, res) // Your function to render an error page
+                    }, // called once when max is reached
+    handler: function (req, res, options) {
+            log.warn({ ip: req.ip }, "Rate limiter triggered");
+            renderError(req, res) // Your function to render an error page
+            }, // called for each subsequent request once max is reached
 });
 
 const authenticateRouter = express.Router();
