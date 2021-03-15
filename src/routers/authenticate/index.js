@@ -7,10 +7,10 @@ const limiter = rateLimit({
     windowMs: 1 * 30 * 1000,
     max: 10,
     handler: function(req, res){
-        res.status(405).send("Called for each subsequent request once max is reached");
+        res.status(405).send("Number of attempts exceeded, try in 30 seconds");
     },
     onLimitReached: function(req, res){
-        res.status(405).send("Called for each subsequent request once max is reached");
+        res.status(405).send("number of attempts exceeded, try in 30 seconds!");
     }
 });
 
